@@ -10,6 +10,7 @@ module.exports = {
       animation: {
         "fade-in": "fade-in 3s ease-in-out forwards",
         "fade-out": "fade-out 1.5s ease-in-out forwards",
+        backgroundTransition: "backgroundTransition 3s ease-in-out forwards",
       },
       keyframes: {
         "fade-in": {
@@ -32,6 +33,14 @@ module.exports = {
           },
           "100%": {
             opacity: "0%",
+          },
+        },
+        backgroundTransition: {
+          "0%": {
+            background: "var(--primary-color)",
+          },
+          "100%": {
+            background: "var(--background)",
           },
         },
       },
