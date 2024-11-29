@@ -1,21 +1,15 @@
-import Navbar from './components/Navbar';
-import { Typography, Container, Box, Button } from '@mui/material';
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
 
 const Home = () => {
   return (
-    <div>
+    <div className="h-full">
       <Navbar />
-      <Container sx={{ paddingTop: 4 }}>
-        <Typography variant="h3" align="center">Welcome to Gaia</Typography>
-        <Box sx={{ marginTop: 4, textAlign: 'center' }}>
-          <Typography variant="h5">
-            An AI-powered safety companion to help women stay safe in risky situations.
-          </Typography>
-          <Button variant="contained" color="primary" href="/emergency" sx={{ marginTop: 3 }}>
-            Get Help Now
-          </Button>
-        </Box>
-      </Container>
+      <div className="w-full h-full flex items-center justify-center flex-col">
+        <img src="/logo.png" alt="logo" />
+        <h1 className="uppercase text-5xl semibold">gaia</h1>
+      </div>
+      <Footer />
     </div>
   );
 };
