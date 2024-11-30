@@ -1,30 +1,28 @@
-"use client"
+"use client";
 
-
-import { useRouter } from 'next/navigation';
-import Navbar from './components/Navbar';
-
-
+import { useRouter } from "next/navigation";
+import Navbar from "./components/Navbar";
 
 import { useState, useEffect } from "react";
 
 import Footer from "./components/Footer";
 import Login from "./components/Login";
 
-
 const Home = () => {
-  const Router = useRouter();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
-  
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("Token");
       if (!token) {
-        Router.push("/register");
+        router.push("/auth/register");
+      } else {
+        setIsLoading(false);
       }
     }
-  }, [Router]);
-  
+  }, [router]);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -36,10 +34,6 @@ const Home = () => {
     return <LoadingScreen />;
   }
 
-
-
-  
- 
   return (
     <div className="h-full">
       <Navbar />
@@ -60,4 +54,6 @@ const LoadingScreen = () => (
   </div>
 );
 
-<Login />;
+{
+  !localStorage.getItem("Token") && <Login />;
+}

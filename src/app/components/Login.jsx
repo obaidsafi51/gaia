@@ -45,8 +45,9 @@ const Login = ({ close }) => {
     <div className="outer h-[100%] w-full inset-0 fixed flex items-center justify-center bg-[var(--background)]" ref={modelRef} onClick={closeModel}>
       <div className="">
         <form onSubmit={signIn} className="flex flex-col items-center ">
-          <img src="logo.png" alt="logo" className="h-24 w-24 mb-16" />
+          <img src="/logo.png" alt="logo" className="h-24 w-24 mb-16" />
           <div className="mb-5">
+            <label className="block text-sm font-medium mb-2">Email</label>
             <input
               type="email"
               id="email"
@@ -57,6 +58,7 @@ const Login = ({ close }) => {
             />
           </div>
           <div className="mb-5">
+            <label className="block text-sm font-medium mb-2">Password</label>
             <input
               type="password"
               id="password"
@@ -75,7 +77,7 @@ const Login = ({ close }) => {
           <div className="flex items-start mb-5">
             <label className="ms-2 text-sm font-medium text-[#293133]/75">
               Forgot password?{" "}
-              <Link href={"/register"} className="text-[var(--primary-color)] bold hover:text-[var(--primary-color)]/75 ">
+              <Link href={"/auth/register"} className="text-[var(--primary-color)] bold hover:text-[var(--primary-color)]/75 ">
                 Click here
               </Link>
             </label>
@@ -83,7 +85,7 @@ const Login = ({ close }) => {
           <div className="flex items-start mb-5">
             <label className="ms-2 text-sm font-medium text-[#293133]/75">
               If you are a new user, please{" "}
-              <Link href={"/register"} className="text-[var(--primary-color)] bold hover:text-[var(--primary-color)]/75">
+              <Link href={"/auth/register"} className="text-[var(--primary-color)] bold hover:text-[var(--primary-color)]/75">
                 Sign Up
               </Link>
             </label>
