@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const Login = ({ onLogin }) => {
+const Login = ({ onLogin, onSignup }) => {
   return (
     <>
       <div className="w-full h-screen flex items-center justify-center ">
@@ -31,7 +31,14 @@ const Login = ({ onLogin }) => {
           </div>
           <div className="flex items-center mt-4">
             <p className=" me-4">Don’t have an account?</p>
-            <Link href="" className="text-[var(--primary-color)] bold">
+            <Link
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                onSignup();
+              }}
+              className="text-[var(--primary-color)] bold"
+            >
               Sign up
             </Link>
           </div>

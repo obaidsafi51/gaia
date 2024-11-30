@@ -3,10 +3,13 @@ import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
+import Signup from "./components/SignUp";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isSigningUp, setIsSigningUp] = useState(false);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -18,9 +21,17 @@ const Home = () => {
   if (isLoading) {
     return <LoadingScreen />;
   }
+  const handleRegister = (newUser) => {
+    setUsers((prevUsers) => [...prevUsers, newUser]);
+    alert("Registration successful!");
+    setIsSigningUp(false); // Torna al login
+  };
 
+  if (isSigningUp) {
+    return <Signup onRegister={handleRegister} setIsSigningUp={setIsSigningUp} />;
+  }
   if (!isLoggedIn) {
-    return <Login onLogin={() => setIsLoggedIn(true)} />;
+    return <Login onLogin={() => setIsLoggedIn(true)} onSignup={() => setIsSigningUp(true)} />;
   }
 
   return (
