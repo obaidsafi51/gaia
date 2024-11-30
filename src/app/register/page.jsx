@@ -26,9 +26,12 @@ const Register = () => {
   const googleProvider = new GoogleAuthProvider();
 
   useEffect(() => {
-    const token = localStorage.getItem("Token");
-    if (token) {
-      router.push("/");
+    // Make sure localStorage is only accessed client-side
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("Token");
+      if (token) {
+        router.push("/");
+      }
     }
   }, [router]);
   const signUp = async (e) => {
