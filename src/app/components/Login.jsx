@@ -49,7 +49,7 @@ const router = useRouter();
         <div className="w-[400px] h-[90%] bg-white p-6 shadow-lg flex flex-col items-center ">
           <img src="logo.png" alt="logo" className="h-[157px]  w-[190px] mt-[94px]  " />
 
-        <form onSubmit={signIn} class="max-w-sm mx-auto     ">
+        <form onSubmit={signIn} class="max-w-sm mx-auto flex flex-col items-center    ">
        
           <div class="mb-5 ">
             

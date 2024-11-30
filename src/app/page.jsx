@@ -3,34 +3,58 @@
 
 import { useRouter } from 'next/navigation';
 import Navbar from './components/Navbar';
-import { Typography, Container, Box, Button } from '@mui/material';
-import { useEffect } from 'react';
+
+
+
+import { useState, useEffect } from "react";
+
+import Footer from "./components/Footer";
+import Login from "./components/Login";
+
 
 const Home = () => {
-
   const Router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+  
   useEffect(() => {
     let token = localStorage.getItem("Token");
     if (!token) {
       Router.push("/register");
     }
   }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); // L'animazione dura 2 secondi
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
+
+
+  
+ 
   return (
-    <div>
+    <div className="h-full">
       <Navbar />
-      <Container sx={{ paddingTop: 4 }}>
-        <Typography variant="h3" align="center">Welcome to Gaia</Typography>
-        <Box sx={{ marginTop: 4, textAlign: 'center' }}>
-          <Typography variant="h5">
-            An AI-powered safety companion to help women stay safe in risky situations.
-          </Typography>
-          <Button variant="contained" color="primary" href="/emergency" sx={{ marginTop: 3 }}>
-            Get Help Now
-          </Button>
-        </Box>
-      </Container>
+      <div className="w-full h-full flex items-center justify-center flex-col">
+        <img src="/logo.png" alt="logo" />
+        <h1 className="uppercase text-5xl semibold">gaia</h1>
+      </div>
+      <Footer />
     </div>
   );
 };
 
 export default Home;
+
+const LoadingScreen = () => (
+  <div className={`w-full h-screen flex items-center justify-center animate-backgroundTransition `}>
+    <img src="/logo.png" alt="logo" className="animate-fade-in w-64 h-64" />
+  </div>
+);
+
+<Login />;

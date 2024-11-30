@@ -126,11 +126,7 @@ const Register = () => {
             Login
           </a>
         </div>
-        {/* <button
-          onClick={SignUpWithGoogle}
-          className="bg-red-400 m-4 p-4 rounded-lg text-white ">
-          Signup with Google
-        </button> */}
+    
         {showMessage && (
         <UserMessage
           color={color}
