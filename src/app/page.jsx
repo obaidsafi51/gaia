@@ -17,11 +17,14 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
-    let token = localStorage.getItem("Token");
-    if (!token) {
-      Router.push("/register");
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("Token");
+      if (!token) {
+        Router.push("/register");
+      }
     }
-  }, []);
+  }, [Router]);
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
