@@ -1,32 +1,49 @@
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
 import { useState } from "react";
+import { auth } from "../../../firebaseConfig";
+import { useRouter } from "next/navigation";
 
-const Signup = ({ onRegister }) => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
+const Signup = () => {
+  const router = useRouter();
+  const [formData, setFormData] = useState({ email: "", password: "", confirmPassword: "" });
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setError(""); // Clear error when user modifies input
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match!");
       return;
     }
 
-    // Simula la registrazione
-    const newUser = { email: formData.email, password: formData.password };
-    onRegister(newUser);
-  };
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      alert("User registered successfully!");
 
+      router.push("/");
+      // Pass user info to the parent component if needed
+    } catch (error) {
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          setError("This email is already in use.");
+          break;
+        case "auth/invalid-email":
+          setError("Invalid email address.");
+          break;
+        case "auth/weak-password":
+          setError("Password is too weak. Please use at least 6 characters.");
+          break;
+        default:
+          setError("An error occurred. Please try again." + error);
+      }
+    }
+  };
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <form onSubmit={handleSubmit} className="p-6 flex flex-col items-center">

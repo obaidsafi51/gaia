@@ -5,44 +5,42 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const Login = ({ close }) => {
+const Login = () => {
   const router = useRouter();
 
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData({ ...data, [name]: value });
+  };
   const signIn = async (e) => {
     e.preventDefault();
     try {
       const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
-      alert("Sign in Successfully", userCredential.user);
-
-      // Ensure localStorage is accessed on the client side only
       if (typeof window !== "undefined") {
         localStorage.setItem("Token", userCredential.user.accessToken);
       }
 
-      close();
       router.push("/");
-      return userCredential.user;
     } catch (error) {
-      alert("Error signing in:", error.message);
-      throw error;
-    }
-  };
-
-  const modelRef = useRef();
-
-  const closeModel = (e) => {
-    if (modelRef.current === e.target) {
-      close();
+      switch (error.code) {
+        case "auth/wrong-password":
+          alert("Incorrect password. Please try again.");
+          break;
+        case "auth/user-not-found":
+          alert("No user found with this email.");
+          break;
+        default:
+          alert("Error signing in: " + error.message);
+      }
     }
   };
 
   return (
-    <div className="outer h-[100%] w-full inset-0 fixed flex items-center justify-center bg-[var(--background)]" ref={modelRef} onClick={closeModel}>
+    <div className="outer h-[100%] w-full inset-0 fixed flex items-center justify-center bg-[var(--background)]">
       <div className="">
         <form onSubmit={signIn} className="flex flex-col items-center ">
           <img src="/logo.png" alt="logo" className="h-24 w-24 mb-16" />
@@ -53,7 +51,8 @@ const Login = ({ close }) => {
               id="email"
               className="w-full  rounded px-3 py-2 bg-[#ffe0b2]/25"
               value={data.email}
-              onChange={(e) => setData({ ...data, email: e.target.value })}
+              onChange={handleChange}
+              name="email"
               required
             />
           </div>
@@ -64,7 +63,8 @@ const Login = ({ close }) => {
               id="password"
               className="w-full  rounded px-3 py-2 bg-[#ffe0b2]/25"
               value={data.password}
-              onChange={(e) => setData({ ...data, password: e.target.value })}
+              onChange={handleChange}
+              name="password"
               required
             />
           </div>

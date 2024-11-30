@@ -16,7 +16,7 @@ const Home = () => {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("Token");
       if (!token) {
-        router.push("/auth/register");
+        router.push("/auth/login");
       } else {
         setIsLoading(false);
       }
@@ -26,7 +26,7 @@ const Home = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000); // L'animazione dura 2 secondi
+    }, 3000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -53,7 +53,3 @@ const LoadingScreen = () => (
     <img src="/logo.png" alt="logo" className="animate-fade-in w-64 h-64" />
   </div>
 );
-
-{
-  !localStorage.getItem("Token") && <Login />;
-}
