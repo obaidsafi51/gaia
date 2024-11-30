@@ -2,7 +2,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebaseConfig";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const Login = ({ close }) => {
@@ -12,22 +12,18 @@ const Login = ({ close }) => {
     email: "",
     password: "",
   });
- 
+
   const signIn = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
+      const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
       alert("Sign in Successfully", userCredential.user);
-      
+
       // Ensure localStorage is accessed on the client side only
       if (typeof window !== "undefined") {
         localStorage.setItem("Token", userCredential.user.accessToken);
       }
-      
+
       close();
       router.push("/");
       return userCredential.user;
@@ -46,20 +42,15 @@ const Login = ({ close }) => {
   };
 
   return (
-    <div
-      className="outer h-[100%] w-full inset-0 fixed opacity-0.5 bg-gray-100/80 flex items-center justify-center"
-      ref={modelRef}
-      onClick={closeModel}
-    >
-      <div className="w-[400px] h-[90%] bg-white p-6 shadow-lg flex flex-col items-center">
-        <img src="logo.png" alt="logo" className="h-[157px] w-[190px] mt-[94px]" />
-
-        <form onSubmit={signIn} className="max-w-sm mx-auto flex flex-col items-center">
+    <div className="outer h-[100%] w-full inset-0 fixed flex items-center justify-center bg-[var(--background)]" ref={modelRef} onClick={closeModel}>
+      <div className="">
+        <form onSubmit={signIn} className="flex flex-col items-center ">
+          <img src="logo.png" alt="logo" className="h-24 w-24 mb-16" />
           <div className="mb-5">
             <input
               type="email"
               id="email"
-              className="custom-input"
+              className="w-full  rounded px-3 py-2 bg-[#ffe0b2]/25"
               value={data.email}
               onChange={(e) => setData({ ...data, email: e.target.value })}
               required
@@ -69,26 +60,34 @@ const Login = ({ close }) => {
             <input
               type="password"
               id="password"
-              className="custom-input"
+              className="w-full  rounded px-3 py-2 bg-[#ffe0b2]/25"
               value={data.password}
               onChange={(e) => setData({ ...data, password: e.target.value })}
               required
             />
           </div>
+          <button
+            type="submit"
+            className="w-full bg-[var(--primary-color)] text-[var(--background)] uppercase text-lg py-2 rounded hover:saturate-150 hover:shadow-lg mt-8 mb-5"
+          >
+            LOGIN
+          </button>
           <div className="flex items-start mb-5">
-            <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            <label className="ms-2 text-sm font-medium text-[#293133]/75">
+              Forgot password?{" "}
+              <Link href={"/register"} className="text-[var(--primary-color)] bold hover:text-[var(--primary-color)]/75 ">
+                Click here
+              </Link>
+            </label>
+          </div>
+          <div className="flex items-start mb-5">
+            <label className="ms-2 text-sm font-medium text-[#293133]/75">
               If you are a new user, please{" "}
-              <Link href={"/register"} className="text-blue-400 underline">
+              <Link href={"/register"} className="text-[var(--primary-color)] bold hover:text-[var(--primary-color)]/75">
                 Sign Up
               </Link>
             </label>
           </div>
-          <button
-            type="submit"
-            className="text-white bg-[#2D5B97] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm w-[322px] sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            LOGIN
-          </button>
         </form>
       </div>
     </div>
