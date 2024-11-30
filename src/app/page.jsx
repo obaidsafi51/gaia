@@ -1,7 +1,20 @@
+"use client"
+
+
+import { useRouter } from 'next/navigation';
 import Navbar from './components/Navbar';
 import { Typography, Container, Box, Button } from '@mui/material';
+import { useEffect } from 'react';
 
 const Home = () => {
+
+  const Router = useRouter();
+  useEffect(() => {
+    let token = localStorage.getItem("Token");
+    if (!token) {
+      Router.push("/register");
+    }
+  }, []);
   return (
     <div>
       <Navbar />
