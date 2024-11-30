@@ -26,7 +26,7 @@ const Register = () => {
   const googleProvider = new GoogleAuthProvider();
 
   useEffect(() => {
-    const token = window.localStorage.getItem("Token");
+    const token = localStorage.getItem("Token");
     if (token) {
       router.push("/");
     }
